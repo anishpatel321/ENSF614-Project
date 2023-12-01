@@ -1,5 +1,24 @@
 package com.anish.FlightApp;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
 public class FlightService {
 
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public FlightService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public List<Flight> getAllFlights() {
+        String sql = "SELECT * FROM flights";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Flight.class));
+    }
 }
