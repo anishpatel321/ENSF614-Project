@@ -1,0 +1,27 @@
+package com.anish.FlightApp;
+
+public class RegistrationRequest {
+	private String _email;
+	private String _username;
+	private String _password;
+	
+	public  RegistrationRequest() {
+		_email = "";
+		_username = "";
+		_password = "";
+	}
+	public  RegistrationRequest(String username,String email,  String password ) {
+		_email = email;
+		_username = username;
+		_password = password;
+	}
+	
+	public String getEmail() {
+		return _email;
+	};
+	public String getUsername(){
+		return _username;
+	};
+	public String getPassword(){
+		return _password;
+	};

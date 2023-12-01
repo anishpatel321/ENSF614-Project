@@ -1,0 +1,59 @@
+package com.anish.FlightApp.controller;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class FlightDBUtil {
+
+	    private static final String URL = "jdbc:mysql://your-database-host:3306/your-database-name";
+	    private static final String USER = "your-username";
+	    private static final String PASSWORD = "your-password";
+
+	    public static Connection getConnection() throws SQLException {
+	        return DriverManager.getConnection(URL, USER, PASSWORD);
+	    }
+
+	    public static void closeConnection(Connection connection) {
+	        try {
+	            if (connection != null) {
+	                connection.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    public static void insertUser(String username, String email, String password) {
+	        Connection connection = null;
+	        PreparedStatement preparedStatement = null;
+
+	        try {
+	            connection = getConnection();
+	            String sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+	            preparedStatement = connection.prepareStatement(sql);
+	            preparedStatement.setString(1, username);
+	            preparedStatement.setString(2, email);
+	            preparedStatement.setString(3, password);
+	            preparedStatement.executeUpdate();
+	            System.out.println("User added to the database.");
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            System.out.println("Failed to add user to the database.");
+	        } finally {
+	            closeConnection(connection);
+	            closePreparedStatement(preparedStatement);
+	        }
+	    }
+
+	    private static void closePreparedStatement(PreparedStatement preparedStatement) {
+	        try {
+	            if (preparedStatement != null) {
+	                preparedStatement.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
