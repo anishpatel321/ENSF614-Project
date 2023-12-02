@@ -1,0 +1,50 @@
+package com.anish.FlightApp;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PopulatorNumberRetriever extends FlightDBUtil{
+	
+	private static String[] FlightNumbers;
+
+    public static void main(String[] args) {
+        try {
+
+            // Establish a connection to the database
+            Connection connection = getConnection();
+
+            // Query to retrieve flight numbers
+            String query = "SELECT flight_number FROM flights";
+
+            // Create a PreparedStatement
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                // Execute the query
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                // Retrieve flight numbers and store them in a List
+                List<String> flightNumbers = new ArrayList<>();
+                while (resultSet.next()) {
+                    FlightNumbers = resultSet.getString("flight_number");
+                    flightNumbers.add(FlightNumbers);
+                }
+
+                // Convert the List to an array if needed
+                String[] flightNumbersArray = flightNumbers.toArray(new String[0]);
+
+                // Print or use the flight numbers as needed
+                for (String flightNumber : flightNumbersArray) {
+                    System.out.println("Flight Number: " + flightNumber);
+                }
+            }
+
+            // Close the connection
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

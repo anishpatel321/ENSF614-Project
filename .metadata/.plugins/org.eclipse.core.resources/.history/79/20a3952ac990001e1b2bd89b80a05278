@@ -1,0 +1,93 @@
+package com.anish.FlightApp;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PopulatorSeats extends FlightDBUtil{
+	
+    private static Integer[] flightIdsArray;
+
+    public PopulatorSeats() {
+        retrieveFlightIds();
+    }
+
+    private void retrieveFlightIds() {
+        try {
+                      
+            Connection connection = getConnection();
+
+            // Query to retrieve flight IDs
+            String query = "SELECT flight_id FROM flights";
+
+            // Create a PreparedStatement
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                // Execute the query
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                // Retrieve flight IDs and store them in a List
+                List<Integer> flightIds = new ArrayList<>();
+                while (resultSet.next()) {
+                    int flightId = resultSet.getInt("flight_id");
+                    flightIds.add(flightId);
+                }
+
+                // Convert the List to an array if needed
+                flightIdsArray = flightIds.toArray(new Integer[0]);
+
+                // Print or use the flight IDs as needed
+                for (Integer flightId : flightIdsArray) {
+                    System.out.println("Flight ID: " + flightId);
+                }
+            }
+
+            // Close the connection
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+ 
+    
+    public static void fillSeats() {
+        try {
+           
+            Connection connection = getConnection();
+
+            // Query to insert seats into the seats table
+            String insertQuery = "INSERT INTO seats (flight_id, rownum, col, occupied) VALUES (?, ?, ?, false)";
+
+            // Create a PreparedStatement
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+
+                //for each flight id
+                for (Integer flightId:flightIdsArray) {
+                    // Populate seats for rows 1 to 12 and columns A to D for each flight_id
+                    for (int row = 1; row <= 12; row++) {
+                        for (char col = 'A'; col <= 'D'; col++) {
+                            preparedStatement.setInt(1, flightId);
+                            preparedStatement.setInt(2, row);
+                            preparedStatement.setString(3, String.valueOf(col));
+
+                            // Execute the insert query
+                            preparedStatement.executeUpdate();
+                        }
+                    }
+                }
+
+                System.out.println("Seats populated successfully.");
+            }
+
+            // Close the connection
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+	
+	
+}

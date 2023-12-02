@@ -49,8 +49,9 @@ const FlightsPage = () => {
                         <th>Flight Number</th>
                         <th>Origin</th>
                         <th>Destination</th>
-                        <th>Departure Time</th>
-                        <th>Arrival Time</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Starting Price</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,7 +60,7 @@ const FlightsPage = () => {
                             <td>
                                 {/* Make the flight number clickable and link to another page */}
                                 <Link
-                                    to={`/flight/${flight.flightNumber}`}
+                                    to={`/map`}
                                     onClick={() => handleFlightClick(flight.flightNumber)}
                                 >
                                     {flight.flightNumber}
@@ -67,8 +68,9 @@ const FlightsPage = () => {
                             </td>
                             <td>{flight.origin}</td>
                             <td>{flight.destination}</td>
-                            <td>{flight.departureTime}</td>
-                            <td>{flight.arrivalTime}</td>
+                            <td>{flight.departureDateTime}</td>
+                            <td>{flight.arrivalDateTime}</td>
+                            <td>{flight.baseCost}</td>
                         </tr>
                     ))}
                 </tbody>

@@ -24,19 +24,33 @@ public class FlightGenerator {
         String password = "password";
 
         int numFlights = 10;
-        int numSeats = 20;
+        int numSeats = 48;
+		int numSeatRows = 4;
         int numBookings = numFlights * numSeats;
-        int numStaff = 20;
+        int numStaff = 3;
         int numAircraft = 4;
         double numSeatPrice = 200.0;
         List<String> flightIDs = generateFlightIDs(numFlights);
+		List<String> seatNames = Arrays.asList(
+            "1A", "1B", "1C", "1D",
+            "2A", "2B", "2C", "2D",
+            "3A", "3B", "3C", "3D",
+            "4A", "4B", "4C", "4D",
+            "5A", "5B", "5C", "5D",
+            "6A", "6B", "6C", "6D",
+            "7A", "7B", "7C", "7D",
+            "8A", "8B", "8C", "8D",
+            "9A", "9B", "9C", "9D",
+            "10A", "10B", "10C", "10D",
+            "11A", "11B", "11C", "11D",
+            "12A", "12B", "12C", "12D"
+        );
         
         // Initialize a MySQL database connection
         try (Connection connection = DriverManager.getConnection(jdbcUrl, username, password)) {
 
                        generateFlights(connection, numFlights, flightIDs, numAircraft); // Specify the number of flights to generate
-                       generateSeats(connection, numSeats, numFlights, numSeatPrice, flightIDs); 
-                       generateUsers(connection, 20); // Specify the number of users to generate
+                       generateSeats(connection, numSeats, numFlights, numSeatPrice, flightIDs, seatNames); 
                        generateBookings(connection, numBookings, numSeats, flightIDs); // Specify the number of bookings to generate
                        generateAirlineStaff(connection, numStaff, flightIDs); // Generate airline staff
                        generateAircraft(connection, numAircraft);
@@ -80,27 +94,28 @@ public class FlightGenerator {
                    }
                }
 
-               private static void generateSeats(Connection connection, int s, int n, double p, List<String> flightIDs) throws SQLException {
+               private static void generateSeats(Connection connection, int s, int n, double p, List<String> flightIDs, List<String> seatNames) throws SQLException {
             	    for (int i = 0; i < n; i++) {
-            	        for (int seatNumber = 1; seatNumber <= s; seatNumber++) {
+            	        for (int seatNumber = 0; seatNumber < s; seatNumber++) {
             	            String seatType = getSeatType(seatNumber);
             	            double price = generateSeatPrice(seatType, p);
 
-            	            String insertQuery = "INSERT INTO Seats (FlightID, SeatType, Price) VALUES (?, ?, ?)";
+            	            String insertQuery = "INSERT INTO Seats (SeatName, FlightID, SeatType, Price) VALUES (?, ?, ?, ?)";
             	            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-            	                preparedStatement.setString(1, flightIDs.get(i));
-            	                preparedStatement.setString(2, seatType);
-            	                preparedStatement.setDouble(3, price);
+            	                preparedStatement.setString(1, seatNames.get(seatNumber));
+								preparedStatement.setString(2, flightIDs.get(i));
+            	                preparedStatement.setString(3, seatType);
+            	                preparedStatement.setDouble(4, price);
             	                preparedStatement.executeUpdate();
             	            }
             	        }
             	    }
             	}
-
+				
             	private static String getSeatType(int seatNumber) {
-            	    if (seatNumber % 3 == 0) {
+            	    if (seatNumber >=0 && seatNumber <17) {
             	        return "Business-Class";
-            	    } else if (seatNumber % 2 == 0) {
+            	    } else if (seatNumber >=17 && seatNumber<29) {
             	        return "Comfort";
             	    } else {
             	        return "Ordinary";
@@ -121,7 +136,7 @@ public class FlightGenerator {
             	}
 
                private static void generateUsers(Connection connection, int numUsers) throws SQLException {
-                   for (int i = 0; i < numUsers; i++) {
+                   /* for (int i = 0; i < numUsers; i++) {
                        String username = "User" + i;
                        String password = "Password" + i;
                        String email = "user" + i + "@example.com";
@@ -143,7 +158,7 @@ public class FlightGenerator {
                                addRegisteredUser(connection, userID, name, address);
                            }
                        }
-                   }
+                   } */
                }
                
                private static void addRegisteredUser(Connection connection, int userID, String name, String address) throws SQLException {
@@ -158,21 +173,19 @@ public class FlightGenerator {
 
                private static void generateBookings(Connection connection, int numBookings, int s, List<String> flightIDs) throws SQLException {
             	    for (int i = 0; i < numBookings; i++) {
-            	        int userID = i % 20 + 1; // Assuming there are 20 users
             	        int seatID = i + 1; //One unique booking for one unique seat ID
             	        boolean insurance = generateRandomInsurance();
             	        boolean paymentStatus = generateRandomPaymentStatus();
             	        String flightID = flightIDs.get(i / s); // Use integer division to assign flightID sequentially
             	        
             	        String bookingID = generateBookingID(i);
-            	        String insertQuery = "INSERT INTO Bookings (BookingID, UserID, FlightID, SeatID, Insurance, PaymentStatus) VALUES (?, ?, ?, ?, ?, ?)";
+            	        String insertQuery = "INSERT INTO Bookings (BookingID, FlightID, SeatID, Insurance, PaymentStatus) VALUES (?, ?, ?, ?, ?)";
             	        try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
             	            preparedStatement.setString(1, bookingID);
-            	            preparedStatement.setInt(2, userID);
-            	            preparedStatement.setString(3, flightID);
-            	            preparedStatement.setInt(4, seatID);
-            	            preparedStatement.setBoolean(5, insurance);
-            	            preparedStatement.setBoolean(6, paymentStatus);
+            	            preparedStatement.setString(2, flightID);
+            	            preparedStatement.setInt(3, seatID);
+            	            preparedStatement.setBoolean(4, insurance);
+            	            preparedStatement.setBoolean(5, paymentStatus);
             	            preparedStatement.executeUpdate();
             	        }
             	    }

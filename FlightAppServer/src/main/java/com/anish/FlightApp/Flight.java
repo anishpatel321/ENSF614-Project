@@ -7,22 +7,31 @@ public class Flight {
     private String flightNumber;
     private String origin;
     private String destination;
-    private String departureTime;
-    private String departureDate;
-    private String arrivalTime;
+    private String departureDateTime;
+    private String arrivalDateTime;
+    private double baseCost;
 
     public Flight() {
     }
 
-    public Flight(int id, String flightNumber, String origin, String destination, String depdate, String deptime, String arrtime, int planeid) {
+    public Flight(int id, String flightNumber, String origin, String destination, String depdatetime, String arrdatetime, double baseCost) {
         this.flightNumber = flightNumber;
         this.origin = origin;
         this.destination = destination;
-        this.departureDate = depdate;
-        this.departureTime = deptime;
-        this.arrivalTime = arrtime;
+        this.departureDateTime = depdatetime;
+        this.arrivalDateTime = arrdatetime;
+        this.baseCost= baseCost;
     }
 
+    public double getbaseCost() {
+    	return baseCost;
+    }
+    
+    public void setbaseCost(double baseCost) {
+    	this.baseCost = baseCost;
+    }
+    
+    
     public int getId() {
         return id;
     }
@@ -63,28 +72,20 @@ public class Flight {
         this.destination = destination;
     }
 
-    public String getDepartureTime() {
-        return departureTime;
+    public String getDepartureDateTime() {
+        return departureDateTime;
     }
 
-    public void setDepartureTime(String departureTime) {
-        this.departureTime = departureTime;
+    public void setDepartureDateTime(String departureDateTime) {
+        this.departureDateTime = departureDateTime;
     }
 
-    public String getDepartureDate() {
-        return departureDate;
+    public String getArrivalDateTime() {
+        return arrivalDateTime;
     }
 
-    public void setDepartureDate(String departureDate) {
-        this.departureDate = departureDate;
+    public void setArrivalDateTime(String arrivalDateTime) {
+        this.arrivalDateTime =  arrivalDateTime;
     }
 
-    public String getArrivalTime() {
-        return arrivalTime;
-    }
-
-    public void setArrivalTime(String arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
-    
 }

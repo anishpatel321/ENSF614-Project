@@ -20,7 +20,7 @@ public class LoginController {
         //System.out.println(registrationRequest.getEmail());
         //System.out.println(registrationRequest.getUsername());
         //System.out.println(registrationRequest.getPassword());
-        FlightDBUtil.loginUser(loginRequest.getUsername(),loginRequest.getPassword());
+        UserLogin.loginUser(loginRequest.getUsername(),loginRequest.getPassword());
         System.out.println(loginRequest.getUsername());
         System.out.println(loginRequest.getPassword());
         

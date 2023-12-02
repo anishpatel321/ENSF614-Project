@@ -20,7 +20,7 @@ public class RegistrationController {
         //System.out.println(registrationRequest.getEmail());
         //System.out.println(registrationRequest.getUsername());
         //System.out.println(registrationRequest.getPassword());
-        FlightDBUtil.insertUser(registrationRequest.getUsername(), registrationRequest.getEmail(),registrationRequest.getPassword());
+        UserRegisterer.insertUser(registrationRequest.getUsername(), registrationRequest.getEmail(),registrationRequest.getPassword());
         
         
         return "Success";

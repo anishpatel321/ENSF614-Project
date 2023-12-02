@@ -6,11 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FlightLoader {
-
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/FlightDB";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "password";
+public class FlightLoader extends FlightDBUtil {
+ 
     private static final String SELECT_QUERY = "SELECT * FROM flights";
 
     public List<Flight> loadFlights() {
@@ -18,7 +15,7 @@ public class FlightLoader {
     
         List<Flight> flights = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+        try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -27,13 +24,13 @@ public class FlightLoader {
                 String airline = resultSet.getString("flight_number");
                 String origin = resultSet.getString("departure_city");
                 String destination = resultSet.getString("destination_city");
-                String depdate = resultSet.getString("departure_date");
-                String deptime = resultSet.getString("departure_time");
-                String arrtime = resultSet.getString("arrival_time");
-                int planeid = resultSet.getInt("plane_id");
+                String depdatetime = resultSet.getString("departure_datetime");
+                String arrdatetime = resultSet.getString("arrival_datetime");
+                double baseCost = resultSet.getDouble("base_seat_cost");
+                
 
                 // Create Flight object and add to the list
-                Flight flight = new Flight(id, airline, origin, destination, depdate, deptime, arrtime, planeid);
+                Flight flight = new Flight(id, airline, origin, destination, depdatetime, arrdatetime, baseCost);
                 flights.add(flight);
             }
 

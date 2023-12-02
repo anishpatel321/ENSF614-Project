@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class FlightDBUtil {
+abstract class FlightDBUtil {
 
-	    private static final String URL = "jdbc:mysql://localhost:3306/FlightDB";
+	    private static final String URL = "jdbc:mysql://localhost:3306/FlightAPPDB";
 	    private static final String USER = "root";
 	    private static final String PASSWORD = "password";
 
@@ -24,60 +24,9 @@ public class FlightDBUtil {
 	            e.printStackTrace();
 	        }
 	    }
-
-	    public static void insertUser(String username, String email, String password) {
-	        Connection connection = null;
-	        PreparedStatement preparedStatement = null;
-
-	        try {
-	            connection = getConnection();
-	            String sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-	            preparedStatement = connection.prepareStatement(sql);
-	            preparedStatement.setString(1, username);
-	            preparedStatement.setString(2, email);
-	            preparedStatement.setString(3, password);
-	            preparedStatement.executeUpdate();
-	            System.out.println("User added to the database.");
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            System.out.println("Failed to add user to the database.");
-	        } finally {
-	            closeConnection(connection);
-	            closePreparedStatement(preparedStatement);
-	        }
-	    }
-
-	    
-	    public static void loginUser(String username, String password) {
-	    	try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-	            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-	            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-	                preparedStatement.setString(1, username);
-	                preparedStatement.setString(2, password);
-
-	                try (ResultSet resultSet = preparedStatement.executeQuery()) {
-	                    if (resultSet.next()) {
-	                        // User found, retrieve information
-	                        String userName = resultSet.getString("username");
-	                        String email = resultSet.getString("email");
-	                        String paymentMethod = resultSet.getString("payment_method");
-
-	                        System.out.println("User Information:");
-	                        System.out.println("Username: " + userName);
-	                        System.out.println("Email: " + email);
-	                        System.out.println("Payment Method: " + paymentMethod);
-	                    } else {
-	                        System.out.println("User not found or invalid credentials.");
-	                    }
-	                }
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
 	    
 	    
-	    private static void closePreparedStatement(PreparedStatement preparedStatement) {
+	    protected static void closePreparedStatement(PreparedStatement preparedStatement) {
 	        try {
 	            if (preparedStatement != null) {
 	                preparedStatement.close();

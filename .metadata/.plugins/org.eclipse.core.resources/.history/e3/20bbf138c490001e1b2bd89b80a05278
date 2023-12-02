@@ -1,0 +1,58 @@
+package com.anish.FlightApp;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PopulatorSeats extends FlightDBUtil{
+	
+	private static Integer[] flightIdsArray;
+
+	public PopulatorSeats() {
+        try {
+            // Load the JDBC driver
+            Class.forName("your.jdbc.driver.ClassName");
+
+            // Establish a connection to the database
+            Connection connection = DriverManager.getConnection("your-jdbc-url", "username", "password");
+
+            // Query to retrieve flight IDs
+            String query = "SELECT flight_id FROM flights";
+
+            // Create a PreparedStatement
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                // Execute the query
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                // Retrieve flight IDs and store them in a List
+                List<Integer> flightIds = new ArrayList<>();
+                while (resultSet.next()) {
+                    int flightId = resultSet.getInt("flight_id");
+                    flightIds.add(flightId);
+                }
+
+                // Convert the List to an array if needed
+                flightIdsArray = flightIds.toArray(new Integer[0]);
+
+                // Print or use the flight IDs as needed
+                for (Integer flightId : flightIdsArray) {
+                    System.out.println("Flight ID: " + flightId);
+                }
+            }
+
+            // Close the connection
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+	
+	public Integer[] getFlightIdsArray() {
+        return flightIdsArray;
+    }
+	
+	
+}

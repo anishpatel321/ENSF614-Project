@@ -22,8 +22,10 @@ public class FlightNumberController {
 
         System.out.println(flightNumber);
 
-        //THIS recieves the flight number that is clicked on the site
-        //add code to make this flight number the session's flight
+        UserSession userSession = UserSession.getInstance();
+
+        // Set the selectedFlight value to the instance
+        userSession.setSelectedFlight(flightNumber);
         
         return "Success";
     }

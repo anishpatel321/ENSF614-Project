@@ -21,12 +21,11 @@ public class AirplaneDatabase {
             Statement statement = connection.createStatement();
             
             // Create the Aircraft table
-            String createAircraftTable = "CREATE TABLE Aircraft ("
-                    + "AircraftID INT AUTO_INCREMENT PRIMARY KEY, "
-                    + "AircraftName VARCHAR(50), "
-                    + "ManufacturingDate DATE"
-                    + ")";
-            statement.execute(createAircraftTable);
+			/*
+			 * String createAircraftTable = "CREATE TABLE Aircraft (" +
+			 * "AircraftID INT AUTO_INCREMENT PRIMARY KEY, " + "AircraftName VARCHAR(50), "
+			 * + "ManufacturingDate DATE" + ")"; statement.execute(createAircraftTable);
+			 */
             
             // Create the Flights table
             String createFlightsTable = "CREATE TABLE Flights ("
@@ -42,6 +41,7 @@ public class AirplaneDatabase {
             // Create the Seats table
             String createSeatsTable = "CREATE TABLE Seats ("
                     + "SeatID INT AUTO_INCREMENT PRIMARY KEY, "
+                    + "SeatName VARCHAR(3), "
                     + "FlightID VARCHAR(6), "
                     + "SeatType VARCHAR(20), "
                     + "Price DECIMAL(10, 2), "
