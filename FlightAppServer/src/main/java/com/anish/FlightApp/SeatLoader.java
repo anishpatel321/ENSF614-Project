@@ -71,9 +71,8 @@ public class SeatLoader extends FlightDBUtil {
     	
     	double base =BaseCostGetter.getBaseCost(userSession.getSelectedFlight());
     	
-    	
         return base*costMultiplier;
     }
 
-    // Add the getConnection method and other necessary methods
+
 }

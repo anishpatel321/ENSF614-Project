@@ -37,6 +37,7 @@ public class BrowseFlightsController {
 //       PopulatorSeats a = new PopulatorSeats();
 //       PopulatorSeats.fillSeats();
         
+        
         return flightList;
         
     }

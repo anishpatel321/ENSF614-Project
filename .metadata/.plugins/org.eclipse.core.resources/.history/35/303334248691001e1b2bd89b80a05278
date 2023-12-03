@@ -1,0 +1,52 @@
+package com.anish.FlightApp;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+/**
+ * 
+ * SeatUpdater extends the FlightDBUtil and can be used to change the value of seat to occupied or not occupied
+ * 
+ */
+
+public class SeatUpdater extends FlightDBUtil {
+	
+	public static void addTicket() {
+        
+		//connection object
+	
+        
+
+		 String flightNumber = "your_flight_number";
+	        int seatRow = 1; // Replace with your seat row
+	        String seatColumn = "A"; // Replace with your seat column
+
+	        // JDBC connection
+	        try (Connection connection = DriverManager.getConnection()) {
+	            // Query to update the occupied status
+	            String updateQuery = "UPDATE seats SET occupied = true WHERE flight_number = ? AND seat_row = ? AND seat_column = ?";
+
+	            try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
+	                preparedStatement.setString(1, flightNumber);
+	                preparedStatement.setInt(2, seatRow);
+	                preparedStatement.setString(3, seatColumn);
+
+	                // Execute the update
+	                int rowsAffected = preparedStatement.executeUpdate();
+
+	                if (rowsAffected > 0) {
+	                    System.out.println("Seat updated successfully.");
+	                } else {
+	                    System.out.println("No seat found for the specified criteria.");
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	
+	
+
+}

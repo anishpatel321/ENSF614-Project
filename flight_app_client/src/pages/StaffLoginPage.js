@@ -20,10 +20,7 @@ const StaffLoginPage = () => {
         // Make a fetch request to your Java backend API with the flight number
         const response = await fetch('/api/StaffSearching', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(flightNumber),
+          body: flightNumber,
         });
 
         if (response.ok) {

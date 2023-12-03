@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 const TicketDisplay = () => {
-  const [ticket, setTicket] = useState(null);
+  const [ticket, setTicket] = useState({
+    firstName: '',
+    lastName: '',
+    seatNumber: '',
+    email: '',
+    cardNumber: ''
+  });
 
   useEffect(() => {
     const fetchTicketData = async () => {

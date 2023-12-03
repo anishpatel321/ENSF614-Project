@@ -1,5 +1,12 @@
 package com.anish.FlightApp;
 
+/**
+ * 
+ * This object stores all of the data for a specific instance of flight
+ * 
+ */
+
+
 public class Flight {
 
 	private int id;

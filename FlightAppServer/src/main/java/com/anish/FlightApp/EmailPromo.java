@@ -1,5 +1,11 @@
 package com.anish.FlightApp;
 
+/**
+ * 
+ * Class implements the promos interface and returns the specific email promo value
+ * 
+ */
+
 class EmailPromo implements Promos {
 	
 

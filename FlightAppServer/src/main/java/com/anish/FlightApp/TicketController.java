@@ -25,7 +25,7 @@ import java.util.List;
 public class TicketController {
 
     @GetMapping("/viewtickets")
-    public List<LineItem> getLineItems() {
+    public List<LineItem> tix() {
     	    
         List<LineItem> checkout = new ArrayList<>();
         
@@ -75,10 +75,12 @@ public class TicketController {
     	UserSession u = UserSession.getInstance();
                
     	t.setCardNumber(u.getCardnum());
-    	t.setEmail(u.getEmail());
-    	t.setFirstName(u.getFName());
-    	t.setLastName(u.getLName());
+    	t.setEmail(u.getTikemail());
+    	t.setFirstName(u.getTikFName());
+    	t.setLastName(u.getTikLName());
     	t.setSeatNumber(u.getSelectedSeat()); 	
+    	
+    	System.out.println(t.getFirstName());
     	
     	
     	
@@ -121,19 +123,10 @@ public class TicketController {
 	
 	
 	@PostMapping("/StaffSearching")
-	public String staffFlight(@PathVariable String flightNumber) {
+	public String staffFlight(@RequestBody String flightNumber) {
 		
 		System.out.println(flightNumber);
 
-     
-        
-        
-        
         return "Success";
-    }
-    
-    
-    
-    
-    
+    } 
 }

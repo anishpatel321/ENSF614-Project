@@ -4,6 +4,7 @@ package com.anish.FlightApp;
 /**
  * This class extends the flightdbutil and provides a function that takes the flightnumber and returns the base cost for the flight
  * with the corresponding flight number in the database
+ * 
  */
 
 

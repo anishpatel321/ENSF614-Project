@@ -51,6 +51,9 @@ public class TicketAdder extends FlightDBUtil {
                 preparedStatement.executeUpdate();
 
                 System.out.println("Row inserted successfully.");
+                
+                SeatUpdater.occupySeat(s.getSelectedFlight(), s.getSelectedSeat());
+                
             }
 
             connection.close();

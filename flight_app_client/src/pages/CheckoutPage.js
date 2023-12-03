@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './CheckoutPage.css';
 
 const CheckoutPage = () => {
   const [orderItems, setOrderItems] = useState([]);
