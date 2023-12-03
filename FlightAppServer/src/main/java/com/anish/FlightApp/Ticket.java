@@ -12,6 +12,7 @@ package com.anish.FlightApp;
 public class Ticket {
     private String firstName;
     private String lastName;
+    private String flightNumber;
     private String seatNumber;
     private String email;
     private int cardNumber;
@@ -20,9 +21,10 @@ public class Ticket {
         
     }
 
-    public Ticket(String firstName,  String lastName,String seatNumber,  String email, int cardNumber) {
+    public Ticket(String firstName,  String lastName,String flightNumber,String seatNumber,  String email, int cardNumber) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.flightNumber=flightNumber;
         this.seatNumber = seatNumber;
         this.email = email;
         this.cardNumber = cardNumber;
@@ -67,4 +69,12 @@ public class Ticket {
     public void setCardNumber(int cardNumber) {
         this.cardNumber = cardNumber;
     }
+
+	public String getFlightNumber() {
+		return flightNumber;
+	}
+
+	public void setFlightNumber(String flightNumber) {
+		this.flightNumber = flightNumber;
+	}
 }

@@ -1,2 +1,9 @@
 1701564842271	Delete element
 1701571485722	Copy compilation unit
+1701577682024	Encapsulate field 'flightNumber'
+1701580837413	Encapsulate field 'firstName'
+1701580841775	Encapsulate field 'lastName'
+1701580845849	Encapsulate field 'seatNumber'
+1701580880646	Encapsulate field 'firstName'
+1701580887662	Encapsulate field 'lastName'
+1701580892004	Encapsulate field 'seatNumber'

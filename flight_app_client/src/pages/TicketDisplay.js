@@ -4,6 +4,7 @@ const TicketDisplay = () => {
   const [ticket, setTicket] = useState({
     firstName: '',
     lastName: '',
+    flightNumber: '',
     seatNumber: '',
     email: '',
     cardNumber: ''
@@ -35,6 +36,7 @@ const TicketDisplay = () => {
             <tr>
               <th>First Name</th>
               <th>Last Name</th>
+              <th>Flight Number</th>
               <th>Seat Number</th>
               <th>Email</th>
               <th>Card Number</th>
@@ -44,6 +46,7 @@ const TicketDisplay = () => {
             <tr>
               <td>{ticket.firstName}</td>
               <td>{ticket.lastName}</td>
+              <td>{ticket.flightNumber}</td>
               <td>{ticket.seatNumber}</td>
               <td>{ticket.email}</td>
               <td>{ticket.cardNumber}</td>

@@ -67,7 +67,7 @@ const SeatMap = () => {
                 {seatData.map(({ seatNumber, price }) => (
                 <tr key={seatNumber}>
                     <td>
-                        <Button 
+                        <Button className='seat-button'
                             label={seatNumber} 
                             onClick ={() => handleSeatClick(seatNumber)}
                         />

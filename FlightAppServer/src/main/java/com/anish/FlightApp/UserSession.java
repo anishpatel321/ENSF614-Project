@@ -225,5 +225,7 @@ public class UserSession {
         cardnum =0;
         id=0;
         Tikemail=null;
+        System.out.println("reset");
+        new SendEmail(); //change receiver email
     }
 }

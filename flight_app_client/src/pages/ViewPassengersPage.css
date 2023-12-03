@@ -1,0 +1,9 @@
+.seat-map {
+    position: relative;
+  }
+
+  .seat-table {
+    overflow-y: scroll; 
+    height: 1000px;
+    width: fit-content;
+  }

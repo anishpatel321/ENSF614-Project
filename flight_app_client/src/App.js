@@ -11,6 +11,7 @@ import MainPage from './pages/MainPage';
 import PaymentForm from './pages/PaymentForm';
 import TicketDisplay from './pages/TicketDisplay';
 import StaffLoginPage from './pages/StaffLoginPage';
+import ViewPassengersPage from './pages/ViewPassengersPage';
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
           <Route path='/pay' element={<PaymentForm />} />
           <Route path='/confirmation' element={<TicketDisplay />} />
           <Route path='/stafflogin' element={<StaffLoginPage />} />
+          <Route path='/viewpassengers' element={<ViewPassengersPage />} />
         </Routes>
       </BrowserRouter>
     </div>

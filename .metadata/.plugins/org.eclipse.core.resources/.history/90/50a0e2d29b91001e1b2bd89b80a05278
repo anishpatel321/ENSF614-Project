@@ -1,0 +1,25 @@
+package com.anish.FlightApp;
+
+public class Passenger {
+    private final String firstName;
+    private final String lastName;
+    private final String seatNumber;
+
+    Passenger(String firstName, String lastName, String seatNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.seatNumber = seatNumber;
+    }
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public String getSeatNumber() {
+		return seatNumber;
+	}
+}

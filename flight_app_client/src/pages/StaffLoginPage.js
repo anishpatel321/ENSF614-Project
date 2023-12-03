@@ -24,7 +24,8 @@ const StaffLoginPage = () => {
         });
 
         if (response.ok) {
-          alert('Login successful!'); // You can replace this with any action you want
+          //alert('Login successful!'); // You can replace this with any action you want
+          window.location.href = '/viewpassengers'
         } else {
           alert('Error during login');
         }
