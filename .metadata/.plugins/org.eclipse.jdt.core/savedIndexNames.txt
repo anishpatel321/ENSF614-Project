@@ -67,5 +67,4 @@ INDEX VERSION 1.134+C:\Users\Anish Patel\Desktop\ENSF614 Project\.metadata\.plug
 2397187592.index
 6573949.index
 1548704407.index
-1747108160.index
 3627258335.index

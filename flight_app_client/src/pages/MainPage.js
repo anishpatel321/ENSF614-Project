@@ -15,8 +15,8 @@ const MainPage = () => {
         console.error('Error fetching data:', error);
       }
     };
-
-    fetchData();
+  
+  fetchData();
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
   return (

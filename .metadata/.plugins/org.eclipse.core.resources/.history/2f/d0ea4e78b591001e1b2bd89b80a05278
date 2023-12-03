@@ -54,8 +54,6 @@ public class TicketAdder extends FlightDBUtil {
                 
                 SeatUpdater.occupySeat(s.getSelectedFlight(), s.getSelectedSeat());
                 
-                
-                
             }
 
             connection.close();
