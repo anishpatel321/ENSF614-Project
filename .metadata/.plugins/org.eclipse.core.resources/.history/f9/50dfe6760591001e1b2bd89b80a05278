@@ -1,0 +1,16 @@
+package com.anish.FlightApp;
+
+public abstract class EmailPromo implements Promos {
+	
+
+    public double getPromo(boolean condition) {
+    	
+    	if (condition) {
+		return -15.99;
+    	}
+    	return 0;
+        
+    }
+
+ 
+}

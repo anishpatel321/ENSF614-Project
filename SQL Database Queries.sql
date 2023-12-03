@@ -13,6 +13,8 @@ CREATE TABLE users (
     gold BOOLEAN NOT NULL
 
 );
+INSERT INTO users (user_id, username, password, email, FName, Lname, monthly_email, gold)
+VALUES (999, 'generaluser', 'password', 'dummy@example.com', 'Dummy', 'User', false, false);
 
 CREATE TABLE seats (
     seat_id INT PRIMARY KEY AUTO_INCREMENT,
@@ -48,5 +50,19 @@ VALUES
 ('CA108', 'Vancouver', 'Calgary', '2023-01-04 12:30:00', '2023-01-04 14:30:00', ROUND((RAND() * 1300) + 100, 2)),
 ('CA109', 'Calgary', 'Edmonton', '2023-01-05 10:00:00', '2023-01-05 11:00:00', ROUND((RAND() * 1300) + 100, 2)),
 ('CA110', 'Edmonton', 'Calgary', '2023-01-05 13:00:00', '2023-01-05 14:00:00', ROUND((RAND() * 1300) + 100, 2));
+
+
+
+CREATE TABLE tickets (
+    ticket_id INT PRIMARY KEY AUTO_INCREMENT,
+    FName VARCHAR(255),
+    seat_num VARCHAR(255),
+    LName VARCHAR(255),
+    flight_number VARCHAR(255),
+    email VARCHAR(255),
+    user_id int DEFAULT NULL,
+    cardnumber int,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
 
 

@@ -1,0 +1,51 @@
+package com.anish.FlightApp;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class UserLogin extends FlightDBUtil {
+
+	
+    public static void loginUser(String username, String password) {
+    	try (Connection connection = getConnection()) {
+            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, username);
+                preparedStatement.setString(2, password);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        // User found, retrieve information and save to usersession
+
+                    	UserSession userSession = UserSession.getInstance();
+
+                        // Set the selectedFlight value to the instance
+                       
+                    	userSession.setid(resultSet.getInt("user_id"));
+                        userSession.setUsername( resultSet.getString("username"));
+                        userSession.setEmail( resultSet.getString("email"));
+                        userSession.setFName(resultSet.getString("FName"));
+                        userSession.setLName(resultSet.getString("LName"));
+                        userSession.setGoldStatus(true);
+                        
+                        if(resultSet.getString("monthly_email")=="1") {
+                        userSession.setEmailStatus(true);
+                        }
+                        else {
+                        userSession.setEmailStatus(false);
+                        }
+                         
+                        
+                    } else {
+                        System.out.println("User not found or invalid credentials.");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}

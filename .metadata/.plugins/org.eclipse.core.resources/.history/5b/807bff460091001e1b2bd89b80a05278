@@ -1,0 +1,11 @@
+package com.anish.FlightApp;
+
+public class GoldPromo implements Promos {
+
+    @Override
+    public void getPromo(boolean condition) {
+        
+    }
+
+ 
+}

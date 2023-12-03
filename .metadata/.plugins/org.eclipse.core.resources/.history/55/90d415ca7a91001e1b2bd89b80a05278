@@ -1,0 +1,7 @@
+package com.anish.FlightApp;
+
+interface Promos {
+	
+	double getPromo(boolean condition);
+
+}

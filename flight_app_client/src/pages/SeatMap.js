@@ -1,7 +1,9 @@
 // SeatMap.js
 import React, { useState, useEffect } from 'react';
 import './SeatMap.css';
-import seatMapImage from './SeatMap.JPG';  // Adjust the path as needed
+import seatMapImage from './SeatMapLegendary.JPG';  // Adjust the path as needed
+import Button from '../components/Button';
+
 
 const SeatMap = () => {
   const [seatData, setSeatData] = useState([]);
@@ -14,8 +16,32 @@ const SeatMap = () => {
       .catch(error => console.error('Error fetching seat data:', error));
   }, []);
 
-  const handleSeatClick = (seatNumber) => {
-    // Handle seat click, e.g., navigate to a new page or perform an action
+  const handleSeatClick = async (seatNumber) => {
+    try {
+        // Make an API call to send the seat number back to Java backend
+
+        const response = await fetch(`/api/send_seat_number/${seatNumber}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(seatNumber),
+            
+        });
+
+        // Handle the response as needed
+        if (response.ok) {
+            console.log('seat number sent successfully');
+            window.location.href = '/checkout'
+            // Additional handling if necessary
+        } else {
+            console.error('Error sending seat number:', response.statusText);
+            // Additional error handling if necessary
+        }
+    } catch (error) {
+        console.error('Error sending seat number:', error);
+        // Additional error handling if necessary
+    }
     console.log(`Seat ${seatNumber} clicked`);
   };
 
@@ -24,30 +50,34 @@ const SeatMap = () => {
       <div className="seat-map">
         {/* Display the seat map image */}
         <img src={seatMapImage} alt="Seat Map" />
-
-        {/* Display clickable seat numbers */}
-        {seatData.map(({ seatNumber, seatCost }) => (
-          <div
-            key={seatNumber}
-            className="seat-number"
-            style={{ left: `${seatNumber * 30}px` }}
-            onClick={() => handleSeatClick(seatNumber)}
-          >
-            {seatNumber}
-          </div>
-        ))}
       </div>
 
       {/* Display seat numbers and costs on the right side */}
       <div className="seat-info">
-        <h2>Seat Information</h2>
-        <ul>
-          {seatData.map(({ seatNumber, seatCost }) => (
-            <li key={seatNumber}>
-              Seat {seatNumber}: ${seatCost}
-            </li>
-          ))}
-        </ul>
+        <h2>Available Seats</h2>
+        <div className='seat-table'>
+        <table>
+            <thead>
+                <tr>
+                <th>Seat Number</th>
+                <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {seatData.map(({ seatNumber, price }) => (
+                <tr key={seatNumber}>
+                    <td>
+                        <Button 
+                            label={seatNumber} 
+                            onClick ={() => handleSeatClick(seatNumber)}
+                        />
+                    </td>
+                    <td>${price}</td>
+                </tr>
+                ))}
+            </tbody>
+        </table>
+        </div>
       </div>
     </div>
   );

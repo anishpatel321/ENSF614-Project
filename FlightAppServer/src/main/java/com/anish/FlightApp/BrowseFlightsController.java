@@ -6,6 +6,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 
+ * This controller gets a call from the api and returns a list of flights to display on the screen
+ * 
+ */
+
+
+
 @RestController
 @RequestMapping("/api/browse_flights")
 public class BrowseFlightsController {
@@ -15,17 +23,19 @@ public class BrowseFlightsController {
     @GetMapping
     public List<Flight> getAllFlights() {
     	
+    	//create a new instance of flightloader
     	FlightLoader flightLoader = new FlightLoader();
-        List<Flight> flightList = flightLoader.loadFlights();
+        List<Flight> flightList =flightLoader.loadFlights();
      
 
-        // Now flightList contains all the Flight objects loaded from the MySQL table
+        // print all values for troubleshoot
         for (Flight flight : flightList) {
             System.out.println(flight);
         }
         
-       // PopulatorSeats a = new PopulatorSeats();
-       // PopulatorSeats.fillSeats();
+        
+//       PopulatorSeats a = new PopulatorSeats();
+//       PopulatorSeats.fillSeats();
         
         return flightList;
         

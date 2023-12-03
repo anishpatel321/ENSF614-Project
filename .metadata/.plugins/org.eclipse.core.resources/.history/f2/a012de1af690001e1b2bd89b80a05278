@@ -1,0 +1,57 @@
+package com.anish.FlightApp;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class SeatMultiplierReciever extends FlightDBUtil {
+	
+	public SeatMultiplierReciever(String seatNumber) {
+		
+		try {
+             // Establish a connection to the database
+            Connection connection = getConnection();
+
+            String[] c = seatNumber.split("(?!^)");
+            
+            UserSession userSession = UserSession.getInstance();
+
+            
+            
+            String flightNumber = userSession.getSelectedFlight();
+            String row = c[2];
+            String col = c[1];
+
+            // Query to retrieve cost_multiplier based on flight_number, row, and col
+            String query = "SELECT cost_multiplier FROM seats " +
+                           "WHERE flight_id = (SELECT flight_id FROM flights WHERE flight_number = ?) " +
+                           "AND rownum = ? AND colnum = ?";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, flightNumber);
+                preparedStatement.setString(2, row);
+                preparedStatement.setString(3, col);
+
+                // Execute the query
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    double costMultiplier = resultSet.getDouble("cost_multiplier");
+                    System.out.println("Cost Multiplier: " + costMultiplier);
+                    userSession.setMultiplier(costMultiplier);
+                } else {
+                    System.out.println("Seat not found or cost_multiplier not available.");
+                }
+            }
+
+            // Close the connection
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		
+			
+	}
+
+}

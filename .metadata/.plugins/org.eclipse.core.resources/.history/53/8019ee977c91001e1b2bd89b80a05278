@@ -1,0 +1,51 @@
+package com.anish.FlightApp;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class TicketAdder extends FlightDBUtil {
+	
+	public static void addTicket() {
+        
+		Connection connection = null;
+        
+
+        try {
+            connection = getConnection();
+            String insertQuery = "INSERT INTO tickets (FName, LName, seat_num, flight_number, email, user_id, cardnumber) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            UserSession s = UserSession.getInstance();
+            
+            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+                preparedStatement.setString(1, s.getTikFName());
+                preparedStatement.setString(2, s.getTikLName());
+                preparedStatement.setString(3, s.getSelectedSeat());
+                preparedStatement.setString(4, s.getSelectedFlight());
+                preparedStatement.setString(5, s.getTikemail());
+                System.out.println("id"+s.getid());
+                if(s.getid()==0) {
+                	preparedStatement.setInt(6, 999);
+                }
+                else {
+                	preparedStatement.setInt(6, s.getid());
+                }
+                
+                preparedStatement.setInt(7, s.getCardnum());
+
+                // Execute the insert query
+                preparedStatement.executeUpdate();
+
+                System.out.println("Row inserted successfully.");
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+	
+	
+
+}

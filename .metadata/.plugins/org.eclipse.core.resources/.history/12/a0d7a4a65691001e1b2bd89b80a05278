@@ -1,0 +1,33 @@
+package com.anish.FlightApp;
+	
+	import com.fasterxml.jackson.annotation.JsonCreator;
+	import com.fasterxml.jackson.annotation.JsonProperty;
+
+	public class TicketGoldRequest  {
+
+		private String fname;
+		private String lname;
+		private int number;
+		
+		@JsonCreator
+		public TicketGoldRequest (@JsonProperty("firstName") String firstname,
+				@JsonProperty("lastName") String lastname,
+				@JsonProperty("creditCardNumber") int number) {
+			this.fname = fname;
+	        this.lname = lname;
+	        this.number = number;
+	    }
+
+	    public String getFname() {
+	        return fname;
+	    }
+
+	    public String getLname() {
+	        return lname;
+	    }
+
+	    public int getNumber() {
+	        return number;
+	    }
+		
+}

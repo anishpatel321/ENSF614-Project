@@ -1,0 +1,47 @@
+package com.anish.FlightApp;
+	
+	import com.fasterxml.jackson.annotation.JsonCreator;
+	import com.fasterxml.jackson.annotation.JsonProperty;
+
+	public class TicketGoldRequest  {
+
+		private String username;
+		private String email;
+		private String password;
+		private String fname;
+		private String lname;
+		private boolean emailsub;
+		
+		@JsonCreator
+		public TicketGoldRequest (@JsonProperty("firstName") String firstname,
+				@JsonProperty("lastName") String lastname,
+				@JsonProperty("creditCardNumber") int number) {
+			this.email = email;
+			this.username = username;
+			this.password = password;
+			this.fname= fname;
+			this.lname=lname;
+			this.emailsub=sub;
+		}
+		
+		
+		public String getEmail() {
+			return email;
+		};
+		public String getUsername(){
+			return username;
+		};
+		public String getPassword(){
+			return password;
+		};
+		public String getfname(){
+			return fname;
+		};
+		public String getlname(){
+			return lname;
+		};
+		public boolean getemailsubstatus(){
+			return emailsub;
+		};
+		
+}

@@ -1,0 +1,13 @@
+package com.anish.FlightApp;
+
+public class GoldPromo implements Promos {
+
+    // Implementing the method from the Promos interface
+    @Override
+    public void getPromo(boolean condition) {
+        // Implementation logic goes here
+        // You may want to use the 'condition' parameter in your implementation
+    }
+
+    // Other methods or fields specific to GoldPromo can be added here
+}

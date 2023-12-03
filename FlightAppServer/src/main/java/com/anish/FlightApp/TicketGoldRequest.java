@@ -1,0 +1,49 @@
+package com.anish.FlightApp;
+	
+	import com.fasterxml.jackson.annotation.JsonCreator;
+	import com.fasterxml.jackson.annotation.JsonProperty;
+	
+	/**
+	 * 
+	 * This object parses the ticket data that is sent from the frontend
+	 * All values are returnable and settable
+	 * 
+	 */
+
+
+	public class TicketGoldRequest  {
+
+		private String fname;
+		private String lname;
+		private String email;
+		private int number;
+		
+		@JsonCreator
+		public TicketGoldRequest (@JsonProperty("firstName") String firstname,
+				@JsonProperty("lastName") String lastname,
+				@JsonProperty("email") String email,
+				@JsonProperty("creditCardNumber") String number) {
+				
+			this.email = email;
+			this.fname = firstname;
+	        this.lname = lastname;
+	        this.number = Integer.parseInt(number);
+	    }
+
+		
+		public String getEmail() {
+	        return email;
+	    }
+	    public String getFname() {
+	        return fname;
+	    }
+
+	    public String getLname() {
+	        return lname;
+	    }
+
+	    public int getNumber() {
+	        return number;
+	    }
+		
+}

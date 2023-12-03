@@ -7,38 +7,49 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * 
+ * This class takes all of the flightIDs and populates the seats table with seats for each flight ranging from row 1-12
+ * and column A through D and extends the FlightDBUtil
+ * 
+ */
+
 public class PopulatorSeats extends FlightDBUtil{
 	
     private static Integer[] flightIdsArray;
 
     public PopulatorSeats() {
-        retrieveFlightIds();
+       retrieveFlightIds();
     }
 
+    //gets all the flight ids from flights table
     private void retrieveFlightIds() {
         try {
                       
             Connection connection = getConnection();
 
-            // Query to retrieve flight IDs
+            // get Flight Ids
             String query = "SELECT flight_id FROM flights";
 
-            // Create a PreparedStatement
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+          
+            try (PreparedStatement preparedStatement  = connection.prepareStatement(query)) {
                 // Execute the query
-                ResultSet resultSet = preparedStatement.executeQuery();
+                ResultSet resultSet =  preparedStatement.executeQuery();
 
-                // Retrieve flight IDs and store them in a List
+                
+                // Store all the flight ids in a list
                 List<Integer> flightIds = new ArrayList<>();
                 while (resultSet.next()) {
                     int flightId = resultSet.getInt("flight_id");
                     flightIds.add(flightId);
                 }
 
-                // Convert the List to an array if needed
+                
                 flightIdsArray = flightIds.toArray(new Integer[0]);
 
-                // Print or use the flight IDs as needed
+         
+                //pring for troubleshooting
                 for (Integer flightId : flightIdsArray) {
                     System.out.println("Flight ID: " + flightId);
                 }
@@ -58,14 +69,14 @@ public class PopulatorSeats extends FlightDBUtil{
            
             Connection connection = getConnection();
 
-            // Query to insert seats into the seats table
-            // Query to insert seats into the seats table
+            //set up the query
             String insertQuery = "INSERT INTO seats (flight_id, rownum, col, occupied, cost_multiplier) VALUES (?, ?, ?, false, ?)";
 
-            // Create a PreparedStatement
-            try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+            
+            
+            try (PreparedStatement preparedStatement =connection.prepareStatement(insertQuery)) {
 
-                // for each flight id
+                //loop threough each flight ID
                 for (Integer flightId : flightIdsArray) {
                     // Populate seats for rows 1 to 12 and columns A to D for each flight_id
                     for (int row = 1; row <= 12; row++) {
@@ -74,7 +85,7 @@ public class PopulatorSeats extends FlightDBUtil{
                             preparedStatement.setInt(2, row);
                             preparedStatement.setString(3, String.valueOf(col));
 
-                            // Calculate cost_multiplier based on row
+                            // Get cost multiplier value for each row based on class
                             double costMultiplier;
                             if (row >= 1 && row <= 4) {
                                 costMultiplier = 3.0;
@@ -95,7 +106,7 @@ public class PopulatorSeats extends FlightDBUtil{
                 System.out.println("Seats populated successfully.");
             }
 
-            // Close the connection
+           
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();

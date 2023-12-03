@@ -4,10 +4,12 @@ import './Button.css';
 
 const Button = ({
   label = '',
-  onClick}) => {
+  onClick,
+  className = ''
+}) => {
 
   return (
-    <button onClick={onClick}>{label}</button>
+    <button className={className} onClick={onClick}>{label}</button>
   );
 };
 

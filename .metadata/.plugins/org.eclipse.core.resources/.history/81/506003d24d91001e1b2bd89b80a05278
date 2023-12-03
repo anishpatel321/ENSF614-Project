@@ -1,0 +1,141 @@
+package com.anish.FlightApp;
+
+public class UserSession {
+
+    private static UserSession instance;
+
+    private String selectedFlight;
+    private String FName;
+    private String LName;
+    private String selectedSeat;
+    private String username;
+    private String email;
+    private String paymentMethod;
+    private double promo;
+    private double ticketprice;
+    private double baseCost;
+    private double multiplier;
+    private boolean gold;
+    private boolean monthlyemail;
+    
+
+    private UserSession() {
+        // Private constructor to prevent instantiation from outside the class
+    }
+
+    public static UserSession getInstance() {
+        if (instance == null) {
+            synchronized (UserSession.class) {
+                if (instance == null) {
+                    instance = new UserSession();
+                    
+                }
+            }
+        }
+        return instance;
+    }
+
+    
+    public String getFName() {
+        return FName;
+    }
+
+    public void setFName(String FName) {
+        this.FName = FName;
+    }
+    
+    public String getLName() {
+        return LName;
+    }
+
+    public void setLName(String LName) {
+        this.LName = LName;
+    }
+    
+    public String getSelectedFlight() {
+        return selectedFlight;
+    }
+
+    public void setSelectedFlight(String selectedFlight) {
+        this.selectedFlight = selectedFlight;
+    }
+
+    public String getSelectedSeat() {
+        return selectedSeat;
+    }
+
+    public void setSelectedSeat(String selectedSeat) {
+        this.selectedSeat = selectedSeat;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public double getPromo() {
+        return promo;
+    }
+
+    public void setPromo(double promo) {
+        this.promo = promo;
+    }
+
+    public double getTicketprice() {
+        return ticketprice;
+    }
+
+    public void setTicketprice(double ticketprice) {
+        this.ticketprice = ticketprice;
+    }
+    
+    public double getBaseCost() {
+        return baseCost;
+    }
+
+    public void setBaseCost(double baseCost) {
+        this.baseCost = baseCost;
+    }
+    
+    public double getMultiplier() {
+        return multiplier;
+    }
+
+    public void setMultiplier(double multiplier) {
+        this.multiplier = multiplier;
+    }
+    
+    public boolean getGoldStatus() {
+        return gold;
+    }
+
+    public void setGoldStatus(boolean gold) {
+        this.gold = gold;
+    }
+    public boolean getEmailStatus() {
+        return monthlyemail;
+    }
+
+    public void setEmailStatus(boolean monthlyemail) {
+        this.monthlyemail = monthlyemail;
+    }
+}

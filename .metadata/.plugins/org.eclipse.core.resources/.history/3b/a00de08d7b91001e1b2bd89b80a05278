@@ -1,0 +1,66 @@
+package com.anish.FlightApp;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SeatLoader extends FlightDBUtil {
+
+    public List<Seat> getSeatsForFlight() {
+    	
+    	UserSession userSession = UserSession.getInstance();
+    	
+    	String flightNumber = userSession.getSelectedFlight();
+    	
+        List<Seat> seats = new ArrayList<>();
+
+        try {
+            Connection connection = getConnection();
+
+            // Query to retrieve available (occupied=false) seat information for a specific flight number
+            String selectQuery = "SELECT rownum, col, cost_multiplier FROM seats " +
+                    "WHERE flight_id = (SELECT flight_id FROM flights WHERE flight_number = ?) AND occupied = false";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+                preparedStatement.setString(1, flightNumber);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    int row = resultSet.getInt("rownum");
+                    String col = resultSet.getString("col");
+                    double costMultiplier = resultSet.getDouble("cost_multiplier");
+
+                    // Calculate the price based on cost_multiplier
+                    double price = calculatePrice(costMultiplier);
+
+                    // Create a Seat object and add it to the list
+                    String seatNumber = row + col;
+                    Seat seat = new Seat(seatNumber, price);
+                    seats.add(seat);
+                }
+            }
+
+            // Close the connection
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return seats;
+    }
+
+    private static double calculatePrice(double costMultiplier) {
+    	
+    	UserSession userSession = UserSession.getInstance();
+    	
+    	double base = BaseCostGetter.getBaseCost(userSession.getSelectedFlight());
+    	
+    	
+        return base*costMultiplier;
+    }
+
+    // Add the getConnection method and other necessary methods
+}

@@ -1,0 +1,7 @@
+package com.anish.FlightApp;
+
+public interface Promos {
+	
+	static void getPromo();
+
+}

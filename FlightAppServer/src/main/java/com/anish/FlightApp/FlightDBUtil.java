@@ -5,19 +5,30 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+/**
+ * 
+ * This UTIL class connects with the database
+ * it is extended for use cases
+ * 
+ */
+
 abstract class FlightDBUtil {
 
+	//store the database parameters
 	    private static final String URL = "jdbc:mysql://localhost:3306/FlightAPPDB";
 	    private static final String USER = "root";
 	    private static final String PASSWORD = "password";
 
+	    //establish a connection
 	    public static Connection getConnection() throws SQLException {
 	        return DriverManager.getConnection(URL, USER, PASSWORD);
 	    }
 
-	    public static void closeConnection(Connection connection) {
+	    
+	    //close the connection
+	    public static void closeConnection(Connection  connection) {
 	        try {
-	            if (connection != null) {
+	            if (connection !=null) {
 	                connection.close();
 	            }
 	        } catch (SQLException e) {
@@ -26,9 +37,10 @@ abstract class FlightDBUtil {
 	    }
 	    
 	    
+	    //close the prepared statement that is in memory
 	    protected static void closePreparedStatement(PreparedStatement preparedStatement) {
 	        try {
-	            if (preparedStatement != null) {
+	            if (preparedStatement!= null) {
 	                preparedStatement.close();
 	            }
 	        } catch (SQLException e) {

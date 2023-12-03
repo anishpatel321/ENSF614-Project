@@ -1,0 +1,32 @@
+/* SeatMap.css */
+.seat-map-container {
+    display: flex;
+  }
+  
+  .seat-map {
+    position: relative;
+  }
+  
+  .seat-number {
+    position: absolute;
+    background-color: #3498db;
+    color: #fff;
+    border: 1px solid #2980b9;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .seat-table {
+    overflow-y: scroll; 
+    height: 1000px;
+    width: fit-content;
+  }
+  
+  .seat-info {
+    margin-left: 20px;
+    position:relative;
+  }

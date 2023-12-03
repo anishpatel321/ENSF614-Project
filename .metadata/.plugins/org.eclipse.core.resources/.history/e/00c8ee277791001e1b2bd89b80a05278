@@ -1,0 +1,24 @@
+package com.anish.FlightApp;
+
+public class MemberChecker {
+	UserSession userSession;
+	
+	MemberChecker(){
+		
+		userSession = UserSession.getInstance();
+		
+		
+	}
+	
+	public boolean loggedin() {
+		
+		if (userSession.getGoldStatus()) {
+			return true;
+		}
+		return false;
+		
+	}
+	
+	
+
+}

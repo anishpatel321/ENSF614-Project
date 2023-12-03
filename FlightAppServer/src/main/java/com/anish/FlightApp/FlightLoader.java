@@ -6,19 +6,30 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * FlightLoader extends the FlightDB util
+ * This extension is for the use case of loading all of the flights in the database into a list
+ * and returning it to the function that called upon it
+ * 
+ */
+
+
 public class FlightLoader extends FlightDBUtil {
  
     private static final String SELECT_QUERY = "SELECT * FROM flights";
 
     public List<Flight> loadFlights() {
     	
-    
+    //create a new array list for the flights
         List<Flight> flights = new ArrayList<>();
 
+        //check connection
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_QUERY);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
+        	//for eeach line update the values and store them in the array
             while (resultSet.next()) {
                 int id = resultSet.getInt("flight_id");
                 String airline = resultSet.getString("flight_number");

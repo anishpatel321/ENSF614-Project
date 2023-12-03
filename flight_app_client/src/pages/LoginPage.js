@@ -32,6 +32,7 @@ const LoginPage = () => {
         window.location.href = '/welcome'
       } else {
         console.error('login failed.');
+        window.location.href = '/login'
       }
     } catch (error) {
       console.error('Error during login:', error);
@@ -59,7 +60,7 @@ const LoginPage = () => {
     </form>
     <Button 
         label = {"Register"} 
-        onClick={() => window.location.href = '/register'}
+        onClick={() => window.location.href = '/goldregister'}
       />
   </div>
   );

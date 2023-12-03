@@ -1,0 +1,79 @@
+package com.anish.FlightApp;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+
+/**
+ * 
+ * Seatloader extends the FlightDBUtil and loads all of the seats for the specific flight into a list it also calculates the seat price
+ * 
+ * 
+ */
+public class SeatLoader extends FlightDBUtil {
+
+	//list of all the seats in the flight
+    public List<Seat> getSeatsForFlight() {
+    	
+    	//get the usersession instance
+    	UserSession userSession = UserSession.getInstance();
+    	
+    	//get the flight number from the session
+    	String flightNumber = userSession.getSelectedFlight();
+    	
+    	//create a list to store the seat objects
+        List<Seat> seats = new ArrayList<>();
+
+        //retrieve the seats
+        try {
+            Connection connection = getConnection();
+
+            // Query to retrieve available (occupied=false) seat information for a specific flight number
+            String selectQuery = "SELECT rownum, col, cost_multiplier FROM seats " +
+                    "WHERE flight_id = (SELECT flight_id FROM flights WHERE flight_number = ?) AND occupied = false";
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(selectQuery)) {
+                preparedStatement.setString(1, flightNumber);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    int row = resultSet.getInt("rownum");
+                    String col = resultSet.getString("col");
+                    double costMultiplier = resultSet.getDouble("cost_multiplier");
+
+                    // Calculate the price
+                    double price = calculatePrice(costMultiplier);
+
+                    // Create a seat number based on the row and column
+                    String seatNumber = row + col;
+                    Seat seat = new Seat(seatNumber, price);
+                    seats.add(seat);
+                }
+            }
+
+            // Close the connection
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return seats;
+    }
+
+    //returns the cost of the seat based on the costMultiplier
+    private static double calculatePrice(double costMultiplier) {
+    	
+    	UserSession userSession = UserSession.getInstance();
+    	
+    	double base = BaseCostGetter.getBaseCost(userSession.getSelectedFlight());
+    	
+    	
+        return base*costMultiplier;
+    }
+
+    // Add the getConnection method and other necessary methods
+}

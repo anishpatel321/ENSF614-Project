@@ -5,16 +5,18 @@ import Button from '../components/Button';
 
 const RegistrationPage = () => {
   const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
     username: '',
     email: '',
     password: '',
+    subscribe: false,
   });
 
   const handleChange = (e) => {
-    console.log('Registration !');
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.type === 'checkbox' ? e.target.checked : e.target.value,
     });
   };
 
@@ -30,8 +32,7 @@ const RegistrationPage = () => {
 
       if (response.ok) {
         console.log('Registration successful!');
-        window.location.href = '/login'
-        // Optionally, you can redirect the user or perform other actions upon successful registration.
+        window.location.href = '/'
       } else {
         console.error('Registration failed.');
       }
@@ -40,10 +41,22 @@ const RegistrationPage = () => {
     }
   };
 
+  
+
   return (
     <div>
-      <h2>Register Page</h2>
+      <h2>Register to be a Gold Member!</h2>
       <form>
+      <label>
+          First Name:
+          <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} />
+        </label>
+        <br />
+        <label>
+          Last Name:
+          <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} />
+        </label>
+        <br />
         <label>
           Username:
           <input type="text" name="username" value={formData.username} onChange={handleChange} />
@@ -57,6 +70,16 @@ const RegistrationPage = () => {
         <label>
           Password:
           <input type="password" name="password" value={formData.password} onChange={ handleChange} />
+        </label>
+        <br />
+        <label>
+          Join our email list (Extra Discounts at checkout!)
+          <input
+            type="checkbox"
+            name="subscribe"
+            checked={formData.subscribe}
+            onChange={handleChange}
+          />
         </label>
         <br />
         <Button

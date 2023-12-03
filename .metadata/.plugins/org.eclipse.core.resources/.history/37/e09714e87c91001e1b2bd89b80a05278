@@ -1,0 +1,93 @@
+package com.anish.FlightApp;
+
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 
+ * This controller gets multiple calls from the api
+ * the first function getLineItems() lists of all the line items to display in the checkout
+ * the second function getloginstatus() just returns if the member is logged in or not for the api to reference
+ * 
+ */
+
+@RestController
+@RequestMapping("/api")
+public class CheckoutController {
+
+    @GetMapping("/checkout_items")
+    public List<LineItem> getLineItems() {
+    	 
+    	//create new list
+        List<LineItem> checkout = new ArrayList<>();
+        
+        //get the instance of user data
+        UserSession userSession = UserSession.getInstance();
+
+        //create instances of the promos
+        EmailPromo e = new EmailPromo();
+        GoldPromo g = new GoldPromo();
+        
+        
+        //obtain the promotional values and the price values
+        double goldpromo = g.getPromo( userSession.getGoldStatus());
+        double emailpromo = e.getPromo( userSession.getEmailStatus());
+        String Seat = userSession.getSelectedSeat();
+        String flight =userSession.getSelectedFlight();
+        double seatcost =userSession.getBaseCost() * userSession.getMultiplier() ;      
+
+        //put the items into a list
+        LineItem lineitem = new LineItem(flight+" Seat:"+Seat, seatcost);
+               
+        checkout.add(lineitem);
+        
+        LineItem lineitem2 = new LineItem("Gold User Promo", goldpromo);
+        
+        checkout.add(lineitem2);
+        
+        LineItem lineitem3 = new LineItem("Email List Promo", emailpromo);
+        
+        checkout.add(lineitem3);
+        
+        userSession.setTotalprice(seatcost+goldpromo+emailpromo);
+        
+       // LineItem lineitem4 = new LineItem("TOTAL", seatcost+goldpromo+emailpromo);
+        
+       // checkout.add(lineitem4);
+        
+        
+        
+          //send the list to the api     
+        return checkout;
+        
+    }
+    
+   
+    @GetMapping("/loggedin")
+    public boolean getLoginStatus() {
+    	
+    	//create a new member checker
+    	MemberChecker m =new MemberChecker();
+    	
+    	if (m.loggedin()) {
+    		
+    		return true;
+    	}
+    	
+    	return false;
+    }
+    
+	
+    
+    
+    
+    
+    
+}

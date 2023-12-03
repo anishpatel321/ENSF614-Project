@@ -1,0 +1,10 @@
+package com.anish.FlightApp;
+
+public abstract class GoldPromo implements Promos {
+
+    public double getPromo(boolean condition) {
+        
+    }
+
+ 
+}
