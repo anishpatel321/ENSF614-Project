@@ -1,0 +1,36 @@
+package com.anish.FlightApp;
+
+import java.util.Properties;
+import javax.mail.Authenticator;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+
+public class SendEmail{
+	
+	
+	public void send(String recipient){
+		
+		Properties properties = new Properties();
+		
+		properties.put("mail.smtp.auth","true");
+		properties.put("mail.smtp.starttls.enable", "true");
+		properties.put("mail.smtp.host","smtp.gmail.com");
+		properties.put("mail.smtp.port","587");
+	}
+	
+	String sender = ("ensf614flightapp@gmail.com");
+	String password = ("tzua hzov rqpj rhqk");
+	
+	Session session = Session.getInstance(properties, new Authenticator(){
+		
+	@Override
+	protected PasswordAuthentication getPasswordAuthentication() {
+		return new PasswordAuthentication(sender, password);
+		
+	}
+		
+	});
+	
+	Message message = prepareMessage(session, sender, recipient)
+	
+}

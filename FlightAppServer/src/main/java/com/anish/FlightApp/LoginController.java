@@ -4,7 +4,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 /**
  * 
@@ -25,18 +27,26 @@ public class LoginController {
 
 	@PostMapping(value = "/login",
 			 consumes =MediaType.APPLICATION_JSON_VALUE)
-    public String  registerUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<Void> registerUser(@RequestBody LoginRequest loginRequest) {
 		
-        //System.out.println(registrationRequest.getEmail());
-        //System.out.println(registrationRequest.getUsername());
-        //System.out.println(registrationRequest.getPassword());
-		
-        UserLogin.loginUser( loginRequest.getUsername(),loginRequest.getPassword());
+        UserLogin e = new UserLogin();
+        
+        
+        if (e.loginUser( loginRequest.getUsername(),loginRequest.getPassword())) {
+        
+        
         System.out.println(loginRequest.getUsername());
         System.out.println(loginRequest.getPassword());
         
+        System.out.println("login success");
+        return ResponseEntity.status(HttpStatus.OK).build();
+        }
         
-        return "Success";
+        else {
+        	System.out.println("login error");
+        	return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        
     }
 	
 	//resets the singleton

@@ -226,6 +226,6 @@ public class UserSession {
         id=0;
         Tikemail=null;
         System.out.println("reset");
-        new SendEmail(); //change receiver email
+        //new SendEmail(); //change receiver email
     }
 }

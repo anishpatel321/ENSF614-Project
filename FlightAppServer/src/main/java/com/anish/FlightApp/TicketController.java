@@ -34,10 +34,16 @@ public class TicketController {
         EmailPromo e = new EmailPromo();
         GoldPromo g = new GoldPromo();
         
+       
         
         
         double goldpromo = g.getPromo( userSession.getGoldStatus());
         double emailpromo = e.getPromo( userSession.getEmailStatus());
+        
+        
+        System.out.println("1111111111111111111111111: "+emailpromo);
+        System.out.println("22111111111112: "+userSession.getEmailStatus());
+        
         String Seat = userSession.getSelectedSeat();
         String flight = userSession.getSelectedFlight();
         double seatcost = userSession.getBaseCost() * userSession.getMultiplier() ;      

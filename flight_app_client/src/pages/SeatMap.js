@@ -1,7 +1,7 @@
 // SeatMap.js
 import React, { useState, useEffect } from 'react';
 import './SeatMap.css';
-import seatMapImage from './SeatMapLegendary.JPG';  // Adjust the path as needed
+import seatMapImage from './SeatMapLegendary.JPG'; 
 import Button from '../components/Button';
 
 
@@ -9,7 +9,7 @@ const SeatMap = () => {
   const [seatData, setSeatData] = useState([]);
 
   useEffect(() => {
-    // Fetch seat data from the Java backend
+    
     fetch('/api/seat_data')
       .then(response => response.json())
       .then(data => setSeatData(data))
@@ -18,7 +18,7 @@ const SeatMap = () => {
 
   const handleSeatClick = async (seatNumber) => {
     try {
-        // Make an API call to send the seat number back to Java backend
+        
 
         const response = await fetch(`/api/send_seat_number/${seatNumber}`, {
             method: 'POST',
@@ -29,18 +29,18 @@ const SeatMap = () => {
             
         });
 
-        // Handle the response as needed
+        
         if (response.ok) {
             console.log('seat number sent successfully');
             window.location.href = '/checkout'
-            // Additional handling if necessary
+           
         } else {
             console.error('Error sending seat number:', response.statusText);
-            // Additional error handling if necessary
+           
         }
     } catch (error) {
         console.error('Error sending seat number:', error);
-        // Additional error handling if necessary
+        
     }
     console.log(`Seat ${seatNumber} clicked`);
   };
@@ -52,7 +52,7 @@ const SeatMap = () => {
         <img src={seatMapImage} alt="Seat Map" />
       </div>
 
-      {/* Display seat numbers and costs on the right side */}
+      {/* Display seat on the right side */}
       <div className="seat-info">
         <h2>Available Seats</h2>
         <div className='seat-table'>
@@ -72,7 +72,7 @@ const SeatMap = () => {
                             onClick ={() => handleSeatClick(seatNumber)}
                         />
                     </td>
-                    <td>${price}</td>
+                    <td>${price.toFixed(2)}</td>
                 </tr>
                 ))}
             </tbody>

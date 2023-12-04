@@ -1,0 +1,119 @@
+package com.anish.FlightApp.Populate;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.anish.FlightApp.FlightDBUtil;
+
+
+/**
+ * 
+ * This class takes all of the flightIDs and populates the seats table with seats for each flight ranging from row 1-12
+ * and column A through D and extends the FlightDBUtil
+ * 
+ */
+
+public class PopulatorSeats extends FlightDBUtil{
+	
+    private static Integer[] flightIdsArray;
+
+    public PopulatorSeats() {
+       retrieveFlightIds();
+    }
+
+    //gets all the flight ids from flights table
+    private void retrieveFlightIds() {
+        try {
+                      
+            Connection connection = getConnection();
+
+            // get Flight Ids
+            String query = "SELECT flight_id FROM flights";
+
+          
+            try (PreparedStatement preparedStatement  = connection.prepareStatement(query)) {
+                // Execute the query
+                ResultSet resultSet =  preparedStatement.executeQuery();
+
+                
+                // Store all the flight ids in a list
+                List<Integer> flightIds = new ArrayList<>();
+                while (resultSet.next()) {
+                    int flightId = resultSet.getInt("flight_id");
+                    flightIds.add(flightId);
+                }
+
+                
+                flightIdsArray = flightIds.toArray(new Integer[0]);
+
+         
+                //pring for troubleshooting
+                for (Integer flightId : flightIdsArray) {
+                    System.out.println("Flight ID: " + flightId);
+                }
+            }
+
+            // Close the connection
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+ 
+    
+    public static void fillSeats() {
+        try {
+           
+            Connection connection = getConnection();
+
+            //set up the query
+            String insertQuery = "INSERT INTO seats (flight_id, rownum, col, occupied, cost_multiplier) VALUES (?, ?, ?, false, ?)";
+
+            
+            
+            try (PreparedStatement preparedStatement =connection.prepareStatement(insertQuery)) {
+
+                //loop threough each flight ID
+                for (Integer flightId : flightIdsArray) {
+                    // Populate seats for rows 1 to 12 and columns A to D for each flight_id
+                    for (int row = 1; row <= 12; row++) {
+                        for (char col = 'A'; col <= 'D'; col++) {
+                            preparedStatement.setInt(1, flightId);
+                            preparedStatement.setInt(2, row);
+                            preparedStatement.setString(3, String.valueOf(col));
+
+                            // Get cost multiplier value for each row based on class
+                            double costMultiplier;
+                            if (row >= 1 && row <= 4) {
+                                costMultiplier = 3.0;
+                            } else if (row >= 5 && row <= 7) {
+                                costMultiplier = 1.5;
+                            } else {
+                                costMultiplier = 1.0;
+                            }
+
+                            preparedStatement.setDouble(4, costMultiplier);
+
+                            // Execute the insert query
+                            preparedStatement.executeUpdate();
+                        }
+                    }
+                }
+
+                System.out.println("Seats populated successfully.");
+            }
+
+           
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+	
+	
+}

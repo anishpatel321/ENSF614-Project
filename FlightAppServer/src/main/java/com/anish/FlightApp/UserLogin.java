@@ -17,8 +17,8 @@ import java.sql.SQLException;
 
 public class UserLogin extends FlightDBUtil {
 
-	//logs in user
-    public static void loginUser(String username, String password) {
+	//check user login credentials
+    boolean loginUser(String username, String password) {
     	
     	//get the connection
     	try (Connection connection=getConnection()) {
@@ -46,14 +46,19 @@ public class UserLogin extends FlightDBUtil {
                         
                         //set the values for the promos in the singleton
                         
-                        if(resultSet.getString("monthly_email")=="1") {
+                        if(resultSet.getInt("monthly_email")==1) {
                         userSession.setEmailStatus(true);
+                        System.out.println("email true");
                         }
                         else {
                         userSession.setEmailStatus(false);
+                        System.out.println("email false");
                         }
                          
+                       
                         
+                        return true;
+                     
                     } else {
                         System.out.println("User not found or invalid credentials.");
                     }
@@ -61,6 +66,8 @@ public class UserLogin extends FlightDBUtil {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
+		return false;
     }
 }

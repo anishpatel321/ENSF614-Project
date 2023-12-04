@@ -34,6 +34,12 @@ public class BrowseFlightsController {
         }
         
         
+        /**
+         * 
+         * THIS MUST RUN ONCE TO POPULATE THE SEAT DATABASE
+         * 
+         */
+
 //       PopulatorSeats a = new PopulatorSeats();
 //       PopulatorSeats.fillSeats();
         

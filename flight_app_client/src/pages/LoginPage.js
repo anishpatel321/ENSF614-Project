@@ -17,6 +17,8 @@ const LoginPage = () => {
     });
   };
 
+  
+
   const handleSubmit = async () => {
     try {
       const response = await fetch('/api/login', {
@@ -28,12 +30,16 @@ const LoginPage = () => {
       });
 
       if (response.ok) {
-        console.log('Login successful!');
+       
         window.location.href = '/welcome'
+        alert('Login successful!');
+
       } else {
-        console.error('login failed.');
-        window.location.href = '/login'
+        
+        window.location.href = '/goldlogin'
+        alert('Error: invalid credentials');
       }
+
     } catch (error) {
       console.error('Error during login:', error);
     }

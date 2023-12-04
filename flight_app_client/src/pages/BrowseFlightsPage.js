@@ -15,7 +15,7 @@ const FlightsPage = () => {
 
     const handleFlightClick = async (flightNumber) => {
         try {
-            // Make an API call to send the flight number back to Java backend
+            // Make an API call to send the flight number back to Java
 
             const response = await fetch(`/api/send_flight_number/${flightNumber}`, {
                 method: 'POST',
@@ -26,17 +26,17 @@ const FlightsPage = () => {
                 
             });
 
-            // Handle the response as needed
+            // Handle the response
             if (response.ok) {
                 console.log('Flight number sent successfully');
-                // Additional handling if necessary
+                // Additional handling 
             } else {
                 console.error('Error sending flight number:', response.statusText);
-                // Additional error handling if necessary
+                // Additional error handling
             }
         } catch (error) {
             console.error('Error sending flight number:', error);
-            // Additional error handling if necessary
+            // Additional error handling
         }
     };
 
@@ -70,7 +70,7 @@ const FlightsPage = () => {
                             <td>{flight.destination}</td>
                             <td>{flight.departureDateTime}</td>
                             <td>{flight.arrivalDateTime}</td>
-                            <td>{flight.baseCost}</td>
+                            <td>${(flight.baseCost).toFixed(2)}</td>
                         </tr>
                     ))}
                 </tbody>

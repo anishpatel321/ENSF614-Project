@@ -18,7 +18,7 @@ const CheckoutPage = () => {
       .catch(error => console.error('Error fetching order items:', error));
   }, []);
 
-  // Function to calculate total cost
+  // calculate total cost
   const calculateTotal = () => {
     return orderItems.reduce((total, item) => total + item.cost, 0).toFixed(2);
   };
@@ -44,7 +44,7 @@ const CheckoutPage = () => {
       if (response.ok) {
         alert('Order placed successfully!');
         window.location.href = '/confirmation';
-        // Additional actions after successful order placement
+        
       } else {
         console.error('Order placement failed.');
       }
